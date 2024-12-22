@@ -39,11 +39,11 @@ jobs:
         env:
           CI: true
       - name: Deploy
-        run: |
-          git config --global user.email "2907476785@qq.com"
-          git config --global user.name "zhang-shen-wei" 
-          hexo deploy
-        # uses: easingthemes/ssh-deploy@v2.0.7
+        # run: |
+        #   git config --global user.email "2907476785@qq.com"
+        #   git config --global user.name "zhang-shen-wei" 
+        #   # hexo deploy
+        uses: easingthemes/ssh-deploy@v2.0.7
         env:
           SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
           ARGS: "-avz --delete"

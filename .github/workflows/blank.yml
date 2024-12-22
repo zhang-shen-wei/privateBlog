@@ -39,15 +39,11 @@ jobs:
         env:
           CI: true
       - name: Deploy
-        # run: |
-        #   hexo deploy
-        #   git config --global user.email "2907476785@qq.com"
-        #   git config --global user.name "zhang-shen-wei" 
         uses: easingthemes/ssh-deploy@v5.1.0
         env:
           SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
           ARGS: "-avz --delete"
           SOURCE: "public/"
-          REMOTE_HOST: "47.108.154.178"
-          REMOTE_USER: "root"
-          TARGET: "/home/admin/blog"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.TARGET }}

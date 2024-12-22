@@ -30,8 +30,14 @@ jobs:
         run: |
           npm install -g hexo-cli
           npm install
+          mkdir -p ~/.ssh/
+          echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan 47.108.154.178 >> ~/.ssh/known_hosts
         env:
          CI: true
+         ACTION_DEPLOY_KEY: ${{ secrets.ACCESS_TOKEN }}
       - name: hexo build
         run: |
           hexo clean
@@ -39,15 +45,16 @@ jobs:
         env:
           CI: true
       - name: Deploy
-        # run: |
+        run: |
+          hexo deploy
         #   git config --global user.email "2907476785@qq.com"
         #   git config --global user.name "zhang-shen-wei" 
-        #   hexo deploy
-        uses: easingthemes/ssh-deploy@v2.0.7
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-          ARGS: "-avz --delete"
-          SOURCE: "public/"
-          REMOTE_HOST: "47.108.154.178"
-          REMOTE_USER: "root"
-          TARGET: "/home/admin/blog.git"
+        
+        # uses: easingthemes/ssh-deploy@v2.0.7
+        # env:
+          # SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+          # ARGS: "-avz --delete"
+          # SOURCE: "public/"
+          # REMOTE_HOST: "47.108.154.178"
+          # REMOTE_USER: "root"
+          # TARGET: "/home/admin/blog.git"

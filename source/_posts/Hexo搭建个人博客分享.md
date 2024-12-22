@@ -8,7 +8,7 @@ tags: 分享
 
 
 
-# 1 搭建博客的几种方式12
+# 1 搭建博客的几种方式
 
 1、使用在线的博客系统，如语雀、掘金、CSDN等。
 
@@ -350,7 +350,7 @@ git --work-tree=/home/admin/blog --git-dir=/home/admin/blog.git checkout -f
 chmod +x blog.git/hooks/post-update
 ```
 
-## 4.2 ssh链接服务器
+## 4.2 本地推送部署
 
 尝试在 `windows` 环境链接服务器
 
@@ -361,8 +361,6 @@ ssh -v root@47.108.154.178
 出现以下信息说明链接成功，可以推送部署
 
 ![](/images/img_1.png)
-
-## 4.3 在本地完成推送部署
 
 修改博客项目中的配置文件 `_config.yml`
 
@@ -380,5 +378,70 @@ hexo clean
 hexo g -d
 ```
 
+## 4.3 自动部署
 
+使用 `Github Action` ，提交代码到仓库，`github` 自动打包部署到服务器
 
+仓库创建 `workflow` 工作流
+
+```yaml
+name: hexo_deploy # 定义工作流名称
+on: # 监听master分支推送代码时触发工作流
+  push:
+    branches: [ "master" ]
+jobs:
+  build:
+    runs-on: ubuntu-20.04 # 定义运行环境
+    steps: # 定义工作流具体执行步骤
+      - name: checkout # 指定仓库分支
+        uses: actions/checkout@master
+      - name: use Node 18 # 指定node版本
+        uses: actions/setup-node@v1
+        with: 
+          node-version: 18
+      - name: npm install
+        run: |
+          npm install -g hexo-cli
+          npm install
+        env:
+         CI: true
+      - name: hexo build # 打包hexo
+        run: |
+          hexo clean
+          hexo generate
+        env:
+          CI: true
+      - name: Deploy # 部署
+        uses: easingthemes/ssh-deploy@v5.1.0
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }} # 服务器私钥
+          ARGS: "-avz --delete"
+          SOURCE: "public/" # 静态文件路径
+          REMOTE_HOST: "47.108.154.178" # 服务器IP
+          REMOTE_USER: "root" # 服务器用户名
+          TARGET: "/home/admin/blog" # 服务器静态文件路径
+```
+
+其中最关键的就是服务器私钥这个变量，获取方式：
+
+首先去你服务器的`~/.ssh`目录，此时目录下应该有4个文件，分别是`authorized_keys`、`id_rsa`、`id_rsa.pub`、`known_hosts`。
+
+如果没有`id_rsa`和`id_rsa.pub`，可以使用`ssh-keygen`来生成，这两个文件就是对应的私钥和公钥。
+
+并复制一份公钥到 `autorized_keys` ，并修改他的权限
+
+```
+# 生成公钥和密钥文件
+ssh-keygen
+# 复制一份公钥
+cp id_rsa.pub anthorized_keys
+# 然后修改它的权限
+chmod 600 ~/.ssh/authorized_keys # 设置只有读写权限
+chmod 700 ~/.ssh # 设置有读 写 执行权限
+```
+
+运行命令`cat ~/.ssh/id_rsa` 获取到私钥的内容，将其复制到仓库环境变量中。
+
+完成上述配置，本地提交代码到 `Github` 仓库后即可自动打包部署到云服务器上。
+
+具体自动部署结果和日志可以去 `Github` 仓库的 `Actions` 中查看。

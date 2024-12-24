@@ -271,6 +271,7 @@ inject:
 ```nginx
 server {
 	listen	80;
+	server_name www.duomangcoding.top;# 域名
 	root	/home/admin/blog;
 	location / {
 	}

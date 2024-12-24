@@ -1,6 +1,6 @@
 ---
 title: 搭建个人博客分享
-description: Hexo + Butterfly主题 + 云服务器 快速搭建一个炫酷的私人博客网站
+description: Hexo + Butterfly主题 + 云服务器 快速搭建专属博客网站
 date: 2024-12-02 15:35:57
 tags: 分享
 ---
@@ -8,7 +8,7 @@ tags: 分享
 
 
 
-# 1 搭建博客的几种方式
+# 1 搭建博客的多种选择
 
 1、使用在线的博客系统，如语雀、掘金、CSDN等。
 
@@ -22,44 +22,32 @@ tags: 分享
 
 3、利用 `github` 搭建个人博客
 
-- 优点：无需借助服务器，搭建难度介于上述二者之间
+- 优点：无需借助服务器，难度适中
 - 缺点：国内环境会出现访问失败或访问超时的情况
 
-个人选择 `Hexo` + 云服务器 ，利用手上空闲的服务器，搭建属于自己的博客网站
+综合考虑，个人选择 `Hexo` + 云服务器，利用闲置服务器，搭建专属博客网站
 
 # 2 创建Hexo博客
 
-## 2.1 什么是Hexo
+## 2.1 `Hexo` 简介
 
-Hexo 是一个快速、简洁且高效的博客框架。
-使用 **Markdown** 解析文章，在几秒内，即可利用靓丽的主题生成静态网页。
+Hexo 是一款快速、简洁且高效的博客框架。
+采用 **Markdown** 解析文章，借助主题可快速构建美观的静态博客网页。
 
 ## 2.2 创建Hexo项目
 
-搭建过程和创建Vue项目一样简便：安装脚手架 -> 初始化 -> 创建页面 -> 启动
+搭建过程和创建Vue项目一样简便：`安装脚手架` -> `初始化` -> `创建页面` -> `启动`
 
-安装Hexo脚手架
-```shell
-npm install -g hexo-cli
-```
-执行命令初始化
-```shell
-npx hexo init project-name
-```
-创建一篇新文章
-```shell
-hexo new doc-name
-```
+安装Hexo脚手架：`npm install -g hexo-cli`
 
-启动服务
+初始化项目：`npx hexo init project-name`
 
-```shell
-hexo server
-```
+创建新文章：`hexo new doc-name`
+
+启动服务：`hexo server`
 
 ## 2.3 目录结构
 ````text
-├─.deploy_git
 ├─public	// 生成的静态文件夹
 ├─scaffolds	// 模板文件夹，新建文章时，会根据该模板文件来创建文件
 ├─source	// 资源文件夹。
@@ -67,7 +55,7 @@ hexo server
 │  ├─categories	// 存放分类页面
 │  ├─tags	// 存放标签页面
 │  └─images	// 存放图片文件
-├─themes	// 主题文件夹，根据主题生成静态页面
+├─_config.butterfly.yml	// 主题配置文件
 ├─_config.yml	// 配置文件
 ├─db.json
 ├─package.json
@@ -81,7 +69,6 @@ hexo server
 | :----------------: | :----------------------------------------------------------- |
 |       title        | 网站标题                                                     |
 |       author       | 作者                                                         |
-|     langulage      | 网站语言。使用 [2 个字母的 ISO-639-1 代码](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)，或 [它的变体](https://hexo.io/docs/internationalization)。 默认为 `en` |
 |     permalink      | 文章的 [永久链接](https://hexo.io/zh-cn/docs/permalinks) 格式 |
 | permalink_defaults | 永久链接中各部分的默认值                                     |
 |     source_dir     | 配置源文件夹路径                                             |
@@ -93,39 +80,23 @@ hexo server
 
 ## 2.5 常用命令
 
-生成静态文件
+生成静态文件：`hexo gengerate`
 
-```shell
-hexo gengerate
-```
+部署网站：`hexo deploy`
 
-部署网站
-
-```shell
-hexo deploy
-```
-
-清除缓存文件（db.json）和已生成的静态文件（public）:
-
-```shell
-hex clean
-```
+清除缓存文件（db.json）和已生成的静态文件（public）：`hex clean`
 
 ## 2.6 写作模板
 
-`hexo` 创建文章时会在头部默认带上一些内容
+`Hexo` 创建文章时默认添加 `Front-matter` 内容（`YAML` 或 `JSON` 格式代码块）用于配置写作设置。
 
 ![](/images/img.png)
 
-上述截图就是文章的 `Front-matter` 内容，`Hexo` 给出的定义是：
-
-`Front-matter` 是文件开头的 `YAML` 或 `JSON` 代码块，用于配置写作设置。 以 `YAML` 格式书写时，`Front-matter` 以三个破折号结束。
-
-当我们编写博客文章时，肯定不希望每次都复制一遍写作设置，`scaffolds` 模板文件夹可以帮我看解决这个问题。
-
-`scaffolds` 模板文件夹下会默认存在三个模板 `post` `page` `draft` ，通过命令新建文档时会默认基于 `post` 模板文件创建，也可以在 `_config.yml` 配置中修改 `default_layout` 来更换新建文章的模板，这样新建文章时，会自动带上模板的写作设置
+可在 `scaffolds` 模板文件夹中修改默认模板（如 `post`、`page`、`draft`），或在 `_config.yml` 中调整 `default_layout`，新建文章时自动应用模板设置。
 
 # 3 博客美化
+
+## 3.1 主题安装与配置
 
 选用Butterfly主题：[Butterfly](https://butterfly.js.org/posts/21cfbf15/)
 
@@ -137,11 +108,9 @@ hex clean
 theme: butterfly
 ```
 
-## 3.1 主题配置
+推荐在根目录下创建一个文件 `_config.butterfly.yml` 用于存放 `Butterfly` 主题相关配置，存在同名配置时，`_config.butterfly.yml` 的配置优先级更高
 
-推荐在根目录下创建一个文件 `_config.butterfly.yml` 用于存放 `Butterfly` 主题相关配置，存在同名配置，`_config.butterfly.yml` 的配置优先级更高
-
-本次分享只讲几个主要的配置，可以让你的博客看着更加炫酷，详细可以参考 [主题配置](https://butterfly.js.org/posts/4aa8abbe/)
+以下时一些主要配置示例，可以让你的博客看着更加炫酷，详细可以参考 [主题配置](https://butterfly.js.org/posts/4aa8abbe/)
 
 ```yaml
 subtitle:
@@ -189,23 +158,9 @@ inject:
 
 ### 3.2.2 标签外挂
 
-[标签外挂](https://butterfly.js.org/posts/ceeb73f/#Note-Bootstrap-Callout) 为主题带来一些额外的类似 `组件库` 的功能和 `UI` 方面的强化
+[标签外挂](https://butterfly.js.org/posts/ceeb73f/#Note-Bootstrap-Callout) 为主题带来一些额外的类似 `组件库` 的功能和 `UI` 方面的强化。
 
-- `Note`提示
-- `Gallery` 相册图库
-- `Tag-hide` 标签隐藏内容
-- `Mermaid` 流程图
-- `Tabs` 切换tab
-- `Button` 按钮
-- `InlineImg` 行内元素显示图片
-- `Label` 高亮文字
-- `Timeline` 时间线
-- `Flink` 友情链接
-- `ABCJS` 乐谱
-- `Series` 系列文章
-- `Chartjs` 图表
-
-以下讲解几个写博客可能经常用到的组件：
+如 `Note`提示、`Tabs` 切换tab、`Chartjs` 图表等
 
 **`Note` 提示**
 
@@ -223,7 +178,7 @@ inject:
 
 **`Tabs` 切换tab**
 
-```
+```text
 {% tabs 标签 %}
 <!-- tab 第一个tab -->
 **这是标签1。**
@@ -253,8 +208,8 @@ inject:
 
 **`Chartjs` 图表**
 
-```
-{% chartjs 70 %}
+```text
+{% chartjs 100 %}
 <!-- chart -->
 {
     "type": "line",
@@ -281,7 +236,7 @@ inject:
 
 渲染效果：
 
-{% chartjs 70 %}
+{% chartjs 100 %}
 <!-- chart -->
 {
 "type": "line",
@@ -307,7 +262,7 @@ inject:
 
 # 4 部署到服务器
 
-基本原理就是将云服务器当作 `git` 仓库，编写好文章后在本地生成静态文件，并推送到云服务器git仓库，服务器自动拉取文件并部署到服务器上
+基本原理就是将云服务器当作 `git` 仓库，编写好文章后在本地生成静态文件，并推送到云服务器 `git` 仓库，服务器自动拉取文件并部署到服务器上
 
 ## 4.1 准备云服务器git环境
 

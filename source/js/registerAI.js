@@ -3,7 +3,7 @@ window.CHATBOT_CONFIG = {
     endpoint: endpoint, // 可以替换为 https://{your-fc-http-trigger-domain}/chat
     displayByDefault: false, // 默认不显示 AI 助手对话框
     title: 'AI 助手', // 自定义 AI 助手标题
-    draggable: true, // 是否开启拖拽
+    draggable: false, // 是否开启拖拽
     aiChatOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
         conversationOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
             conversationStarters: [

@@ -1,3 +1,18 @@
-#site-info {
-    color: black;
+:root {
+    /* webchat 工具栏的颜色 */
+    --webchat-toolbar-background-color: #1464E4;
+    /* webchat 工具栏文字和按钮的颜色 */
+    --webchat-toolbar-text-color: #FFF;
+}
+/* webchat 对话框如果被遮挡，可以尝试通过 z-index、bottom、right 等设置来调整位置 */
+.webchat-container {
+    z-index: 100;
+    bottom: 10px;
+    right: 10px;
+}
+/* webchat 的唤起按钮如果被遮挡，可以尝试通过 z-index、bottom、right 等设置来调整位置 */
+.webchat-bubble-tip {
+    z-index: 99;
+    bottom: 20px;
+    right: 20px;
 }

@@ -7,9 +7,9 @@ window.CHATBOT_CONFIG = {
     aiChatOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
         conversationOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#conversation-options
             conversationStarters: [
-                {prompt: '哪款手机续航最长？'},
-                {prompt: '你们有哪些手机型号？'},
-                {prompt: '有折叠屏手机吗?'},
+                {prompt: '推荐一些hexo博客相关的文章？'},
+                {prompt: 'hexo搭建博客相关知识？'},
+                {prompt: '如何自动化部署博客?'},
             ]
         },
         displayOptions: { // 自定义取值参考：https://docs.nlkit.com/nlux/reference/ui/ai-chat#display-options
